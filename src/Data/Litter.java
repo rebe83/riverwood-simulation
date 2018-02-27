@@ -1,4 +1,3 @@
 package Data;
 
-public enum Litter {
-}
+public enum Litter {CAN, TIRE, STYROFOAM, PLASTIC_BAG, BOTTLE}
