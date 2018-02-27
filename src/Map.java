@@ -1,7 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 
-import Data.Enums.Weather;
+import Data.LocationType;
+import Data.Weather;
 
 public class Map {
 
@@ -11,4 +12,12 @@ public class Map {
     private int NUM_ANIMALS;
     private int NUM_LITTER;
 
+    public Weather randomWeather() {
+        Weather[] weathers = Weather.values();
+        return weathers[0];
+    }
+
+    public LocationType randomLocationType() {
+        return LocationType.value();
+    }
 }

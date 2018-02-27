@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-import Data.Enums.AnimalType;
+import Data.AnimalType;
 
 public class Animal {
 

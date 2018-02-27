@@ -6,7 +6,6 @@ import Data.Enums.Resource;
 
 public class Location {
 
-
     private LocationType locationType;
     private List<Animal> animals = new ArrayList<>();
     private List<Item> items = new ArrayList<>();

@@ -1,5 +1,10 @@
+import Data.Litter;
+import Data.Food;
+import Data.Weapon;
+
 public class Item {
 
-    private enum Food {SEEDS, MEAT, SUGAR_CUBES, SALT_LICK, }
-    private enum Litter {CAN, TIRE, STYROFOAM, PLASTIC_BAG, BOTTLE}
+    private enum ItemType {LITTER, FOOD, WEAPON}
+
+
 }

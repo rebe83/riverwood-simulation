@@ -1,5 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
+import Data.Litter;
+import Data.Food;
+
 public class Player {
 
     private int MAX_HEALTH = 50;
