@@ -7,15 +7,16 @@ public class Simulation {
     private static final Scanner scan = new Scanner(System.in);
     private static boolean gameOn;
 
-    Simulation() {
-        map = new Map(this);
+    private static void setup() {
+        map = new Map();
         player = new Player();
         timePassed = 0;
+        gameOn = true;
+        player.setCurrentLocation(map.getLocations()[0][0]);
     }
 
     public static void main(String[] args) {
-        gameOn = true;
-        player.setCurrentLocation(map.getLocations()[0][0]);
+        setup();
 
         while(gameOn) {
 
@@ -44,15 +45,15 @@ public class Simulation {
         }
     }
 
-    public boolean isGameOn() {
+    public static boolean isGameOn() {
         return gameOn;
     }
 
-    public void setGameOn(boolean gameOn) {
+    public static void setGameOn(boolean gameOn) {
         Simulation.gameOn = gameOn;
     }
 
-    public int getTimePassed() {
+    public static int getTimePassed() {
         return timePassed;
     }
 }
