@@ -4,30 +4,66 @@ import java.util.Random;
 import Data.*;
 
 public class Map {
-    private Location[][] map;
+    private Location[][] locations;
     private Weather weather;
     private int months;
     private Season season;
-    private int[] numAnimals;
+    private int[] numBreeds;
+    private int totalAnimals;
     private int numLitter;
 
     Map() {
-        map =  new Location[5][5];
+        locations =  new Location[4][4];
+        numBreeds = new int[AnimalBreed.values().length];
+        numLitter = randomIndex(20) + 11;
+        weather = randomWeather();
+        season = randomSeason();
+        months = 0;
 
     }
 
-    public Weather randomWeather() {
-        Weather[] weathers = Weather.values();
-        return weathers[randomIndex(weathers.length)];
+    private Weather randomWeather() {
+        return Weather.values()[randomIndex(Weather.values().length)];
     }
 
-    public LocationType randomLocationType() {
-        LocationType[] locationTypes = LocationType.values();
-        return locationTypes[randomIndex(locationTypes.length)];
+    private LocationType randomLocationType() {
+        return LocationType.values()[randomIndex(LocationType.values().length)];
+    }
+
+    private Season randomSeason() {
+        return Season.values()[randomIndex(Season.values().length)];
     }
 
     public int randomIndex(int arrayLength) {
         Random random = new Random();
         return random.nextInt(arrayLength - 1);
+    }
+
+    public Location[][] getLocations() {
+        return locations;
+    }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public int getMonths() {
+        return months;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public int[] getNumBreeds() {
+        return numBreeds;
+    }
+
+    public int getNumLitter() {
+        return numLitter;
+    }
+
+    public int getTotalAnimals() {
+        return totalAnimals;
     }
 }
