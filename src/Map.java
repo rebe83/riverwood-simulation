@@ -8,6 +8,8 @@ public class Map {
      * the maximum amount of animals allowed on the map
      */
     private static final int MAX_ANIMALS = 50;
+    private static final int MAX_LITTER = 30;
+    private static final int MAX_ONE_BREED = 10;
 
     private Simulation simulation;
     private Location[][] locations;
@@ -26,6 +28,52 @@ public class Map {
         weather = randomWeather();
         season = randomSeason();
         months = 0;
+        for (int i = 0; i < locations.length; i++) {
+            for (int j = 0; j < locations[i].length; j++) {
+                locations[i][j] = new Location();
+                locations[i][j].setMap(this);
+                locations[i][j].setLocationType(randomLocationType());
+                locations[i][j].setCoordinate(i * 10 + j);
+            }
+        }
+        animalMaker();
+        litterMaker();
+    }
+
+    private boolean animalMaker() {
+        if (this.locations != null) {
+            while (totalAnimals < 20) {
+                for (int i = 0; i < locations.length; i++) {
+                    for (int j = 0; j < locations[i].length; j++) {
+                        while(locations[i][j].getAnimals().size() < 5 ) {
+                            for (int k = 0; k < this.randomIndex(5); k++) {
+                                locations[i][j].addAnimal(new Animal(locations[i][j]));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return (totalAnimals >= 20);
+    }
+
+    private boolean litterMaker() {
+        if (this.locations != null) {
+            while (numLitter < 30) {
+                for (int i = 0; i < locations.length; i++) {
+                    for (int j = 0; j < locations[i].length; j++) {
+                        while(locations[i][j].getItems().size() < 2 ) {
+                            for (int k = 0; k < this.randomIndex(3); k++) {
+                                List<Item> newItems = locations[i][j].getItems();
+                                newItems.add(new Item(Litter.values()[randomIndex(Litter.values().length)]));
+                                locations[i][j].setItems(newItems);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return (numLitter >= 30);
     }
 
     private Weather randomWeather() {

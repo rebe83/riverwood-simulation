@@ -11,10 +11,11 @@ public class Location {
     private LocationType locationType;
     private List<Animal> animals = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
-    private List<Resource> resources = new ArrayList<>();
+    private List<Resource> resources;
 
     public Location() {
         this.directions = directionHandler();
+        this.resources = resourceHandler();
     }
 
     public boolean addAnimal(Animal animal) {
@@ -52,6 +53,31 @@ public class Location {
             directions.remove(Direction.SOUTH);
         }
         return directions;
+    }
+
+    private List<Resource> resourceHandler() {
+        List<Resource> resources;
+        if (this.getLocationType() == LocationType.FOREST) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS, Resource.TREE));
+            return resources;
+
+        } else if (this.getLocationType() == LocationType.FIELD) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS));
+            return resources;
+        } else if (this.getLocationType() == LocationType.FARM) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS, Resource.TRASH));
+            return resources;
+        } else if (this.getLocationType() == LocationType.HOUSE) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS, Resource.TREE, Resource.PAVEMENT, Resource.TRASH));
+            return resources;
+        } else if (this.getLocationType() == LocationType.STREET) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS, Resource.PAVEMENT));
+            return resources;
+        } else if (this.getLocationType() == LocationType.CREEK) {
+            resources = new ArrayList<>(Arrays.asList(Resource.GRASS, Resource.TREE, Resource.WATER));
+            return resources;
+        }
+        return null;
     }
 
     public List<Direction> getDirections() {

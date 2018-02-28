@@ -1,7 +1,4 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 import Data.*;
 
@@ -10,6 +7,7 @@ public class Animal {
     private AnimalBreed breed;
     private List<AnimalBreed> prey = new ArrayList<>();
     private List<Food> food = new ArrayList<>();
+    private List<Resource> resources = new ArrayList<>();
     private Location location;
     private Location previousLocation;
     private Map map;
@@ -67,6 +65,159 @@ public class Animal {
         hashCode = hashCode();
     }
 
+    private boolean breedManager() {
+        if (this.breed == null) {
+            AnimalBreed[] animalBreeds = AnimalBreed.values();
+            int randomIndex = map.randomIndex(animalBreeds.length);
+            this.breed = animalBreeds[randomIndex];
+        }
+
+        if (this.breed == AnimalBreed.FOX) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.POSSUM, AnimalBreed.SQUIRREL);
+            this.food = Arrays.asList(Food.MEAT, Food.SUGAR_CUBES);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.DEAD_ANIMAL);
+            this.attack = 2;
+            this.health = 40;
+            this.defense = 0;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.BEAVER) {
+            this.prey = null;
+            this.food = Arrays.asList(Food.SEEDS, Food.SUGAR_CUBES);
+            this.resources = Arrays.asList(Resource.TREE, Resource.GRASS);
+            this.attack = 3;
+            this.health = 20;
+            this.defense = 0;
+            if (location.getMap().getSeason() == Season.WINTER) {
+                this.hibernating = true;
+            } else {
+                this.hibernating = false;
+            }
+
+        } else if (this.breed == AnimalBreed.CARDINAL) {
+            this.prey = null;
+            this.food.add(Food.SEEDS);
+            resources.add(Resource.TREE);
+            this.attack = 1;
+            this.health = 5;
+            this.defense = 0;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.COUGAR) {
+            this.prey = Arrays.asList(AnimalBreed.values());
+            this.food = Arrays.asList(Food.MEAT, Food.SALT_LICK);
+            this.resources.add(Resource.DEAD_ANIMAL);
+            this.attack = 10;
+            this.health = 500;
+            this.defense = 3;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.COYOTE) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.POSSUM, AnimalBreed.SPARROW, AnimalBreed.SQUIRREL, AnimalBreed.FOX, AnimalBreed.RACCOON);
+            this.food.add(Food.MEAT);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.DEAD_ANIMAL);
+            this.attack = 7;
+            this.health = 50;
+            this.defense = 1;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.DEER) {
+            this.prey = null;
+            this.food = Arrays.asList(Food.SUGAR_CUBES, Food.SALT_LICK);
+            this.resources.add(Resource.GRASS);
+            this.attack = 4;
+            this.health = 60;
+            this.defense = 1;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.HAWK) {
+            this.prey = Arrays.asList(AnimalBreed.OWL, AnimalBreed.CARDINAL, AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.POSSUM, AnimalBreed.SPARROW, AnimalBreed.SQUIRREL, AnimalBreed.MOUSE);
+            this.food = Arrays.asList(Food.MEAT, Food.SUGAR_CUBES);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.DEAD_ANIMAL);
+            this.attack = 3;
+            this.health = 10;
+            this.defense = 0;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.SNAKE) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.SQUIRREL);
+            this.food.add(Food.MEAT);
+            this.resources = Arrays.asList(Resource.DEAD_ANIMAL, Resource.PAVEMENT);
+            this.attack = 1;
+            this.health = 6;
+            this.defense = 2;
+            if (location.getMap().getSeason() == Season.WINTER) {
+                this.hibernating = true;
+            } else {
+                this.hibernating = false;
+            }
+
+        } else if (this.breed == AnimalBreed.RACCOON) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.SQUIRREL);
+            this.food = Arrays.asList(Food.MEAT, Food.SUGAR_CUBES, Food.SEEDS);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.DEAD_ANIMAL);
+            this.attack = 3;
+            this.health = 20;
+            this.defense = 1;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.MOUSE) {
+            this.prey = null;
+            this.food = Arrays.asList(Food.SUGAR_CUBES, Food.SEEDS);
+            this.resources = Arrays.asList(Resource.GRASS, Resource.TRASH);
+            this.attack = 1;
+            this.health = 2;
+            this.defense = 0;
+            if (location.getMap().getSeason() == Season.WINTER) {
+                this.hibernating = true;
+            } else {
+                this.hibernating = false;
+            }
+
+        } else if (this.breed == AnimalBreed.OWL) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.SPARROW, AnimalBreed.SQUIRREL);
+            this.food = Arrays.asList(Food.MEAT, Food.SEEDS);
+            this.resources = Arrays.asList(Resource.TREE, Resource.DEAD_ANIMAL);
+            this.attack = 3;
+            this.health = 10;
+            this.defense = 0;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.POSSUM) {
+            this.prey = Arrays.asList(AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.SQUIRREL);
+            this.food = Arrays.asList(Food.MEAT, Food.SUGAR_CUBES);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.DEAD_ANIMAL);
+            this.attack = 3;
+            this.health = 15;
+            this.defense = 0;
+            this.hibernating = false;
+
+        } else if (this.breed == AnimalBreed.SPARROW) {
+            this.prey = null;
+            this.food.add(Food.SEEDS);
+            this.resources.add(Resource.TREE);
+            this.attack = 0;
+            this.health = 3;
+            this.defense = 0;
+            if (location.getMap().getSeason() == Season.WINTER) {
+                this.hibernating = true;
+            } else {
+                this.hibernating = false;
+            }
+
+        } else if (this.breed == AnimalBreed.SQUIRREL) {
+            this.prey = null;
+            this.food = Arrays.asList(Food.SEEDS, Food.SUGAR_CUBES);
+            this.resources = Arrays.asList(Resource.TRASH, Resource.TREE);
+            this.attack = 1;
+            this.health = 6;
+            this.defense = 0;
+            this.hibernating = false;
+        }
+        return false;
+
+    }
+
     private boolean attack(Player player) {
         int playerHealth = player.getHealth();
         player.takeDamage(attack);
@@ -100,7 +251,7 @@ public class Animal {
 
     private boolean eat() {
         if (this.hunger >= 20) {
-            for (Food b : food) {
+            for (Resource b : resources) {
                 if (b.name().equals("GRASS")) {
                     this.hunger = this.hunger - 10;
                     this.thirst = this.thirst + 5;
@@ -186,50 +337,7 @@ public class Animal {
         return false;
     }
 
-    private boolean breedManager() {
-        if (this.breed == null) {
-            AnimalBreed[] animalBreeds = AnimalBreed.values();
-            int randomIndex = map.randomIndex(animalBreeds.length);
-            this.breed = animalBreeds[randomIndex];
-        }
 
-        if (this.breed == AnimalBreed.FOX) {
-            this.prey = Arrays.asList(AnimalBreed.HAWK, AnimalBreed.CARDINAL, AnimalBreed.SNAKE, AnimalBreed.MOUSE, AnimalBreed.POSSUM, AnimalBreed.SPARROW, AnimalBreed.SQUIRREL);
-            this.attack = 3;
-            this.defense = 0;
-            this.hibernating = false;
-
-        } else if (this.breed == AnimalBreed.BEAVER) {
-            this.prey = null;
-
-        } else if (this.breed == AnimalBreed.CARDINAL) {
-
-        } else if (this.breed == AnimalBreed.COUGAR) {
-
-        } else if (this.breed == AnimalBreed.COYOTE) {
-
-        } else if (this.breed == AnimalBreed.DEER) {
-
-        } else if (this.breed == AnimalBreed.HAWK) {
-
-        } else if (this.breed == AnimalBreed.SNAKE) {
-
-        } else if (this.breed == AnimalBreed.RACCOON) {
-
-        } else if (this.breed == AnimalBreed.MOUSE) {
-
-        } else if (this.breed == AnimalBreed.OWL) {
-
-        } else if (this.breed == AnimalBreed.POSSUM) {
-
-        } else if (this.breed == AnimalBreed.SPARROW) {
-
-        } else if (this.breed == AnimalBreed.SQUIRREL) {
-
-        }
-        return false;
-
-    }
 
     public AnimalBreed getBreed() {
         return breed;

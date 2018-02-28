@@ -25,10 +25,6 @@ public class Player {
         this.cash = 0;
     }
 
-    private boolean move() {
-        return false;
-    }
-
     private boolean attack(Animal animal) {
         animal.takeDamage(this.attack);
         return (animal.takeDamage(this.getAttack()));
