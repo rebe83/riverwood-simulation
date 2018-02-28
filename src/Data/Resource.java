@@ -1,3 +1,3 @@
 package Data;
 
-public enum Resource {WATER, GRASS, TREES, TRASH, PAVEMENT, DEAD_ANIMAL}
+public enum Resource {WATER, GRASS, TREE, TRASH, PAVEMENT, DEAD_ANIMAL}
