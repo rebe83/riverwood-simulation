@@ -6,12 +6,15 @@ import static org.junit.Assert.assertEquals;
 
 public class InputHandlerTest {
 
-    private Player player = new Player();
+    private Player player;
     private Map map;
+    private Simulation sim;
 
     @Before
     public void setUp() {
-        map = new Map();
+        sim = new Simulation();
+        map = new Map(sim);
+        player = new Player();
         player.setCurrentLocation(map.getLocations()[2][2]);
 
     }
@@ -56,8 +59,4 @@ public class InputHandlerTest {
 
     }
 
-    @Test
-    public void exitHandlerTest() {
-
-    }
 }
