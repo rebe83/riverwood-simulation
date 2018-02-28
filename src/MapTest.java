@@ -10,7 +10,7 @@ public class MapTest {
     @Before
     public void setup() {
         simulation = new Simulation();
-        map = new Map(simulation);
+        map = new Map();
     }
 
     @Test

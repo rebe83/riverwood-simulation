@@ -11,7 +11,6 @@ public class Map {
     private static final int MAX_LITTER = 30;
     private static final int MAX_ONE_BREED = 10;
 
-    private Simulation simulation;
     private Location[][] locations;
     private Weather weather;
     private int months;
@@ -20,9 +19,8 @@ public class Map {
     private int totalAnimals;
     private int numLitter;
 
-    Map(Simulation simulation) {
-        this.simulation = simulation;
-        locations =  new Location[4][4];
+    Map() {
+        locations = new Location[4][4];
         numBreeds = new int[AnimalBreed.values().length];
         numLitter = randomIndex(20) + 11;
         weather = randomWeather();
@@ -30,9 +28,7 @@ public class Map {
         months = 0;
         for (int i = 0; i < locations.length; i++) {
             for (int j = 0; j < locations[i].length; j++) {
-                locations[i][j] = new Location();
-                locations[i][j].setMap(this);
-                locations[i][j].setLocationType(randomLocationType());
+                locations[i][j] = new Location(this);
                 locations[i][j].setCoordinate(i * 10 + j);
             }
         }
@@ -47,7 +43,16 @@ public class Map {
                     for (int j = 0; j < locations[i].length; j++) {
                         while(locations[i][j].getAnimals().size() < 5 ) {
                             for (int k = 0; k < this.randomIndex(5); k++) {
-                                locations[i][j].addAnimal(new Animal(locations[i][j]));
+                                Animal newAnimal = new Animal(locations[i][j]);
+
+                                if (numBreeds[newAnimal.getBreed().ordinal()] + 1 > MAX_ONE_BREED) {
+                                    k++;
+                                } else {
+                                    locations[i][j].addAnimal(newAnimal);
+                                    totalAnimals++;
+                                    numBreeds[newAnimal.getBreed().ordinal()]++;
+                                }
+
                             }
                         }
                     }
@@ -59,7 +64,7 @@ public class Map {
 
     private boolean litterMaker() {
         if (this.locations != null) {
-            while (numLitter < 30) {
+            while (numLitter < MAX_LITTER) {
                 for (int i = 0; i < locations.length; i++) {
                     for (int j = 0; j < locations[i].length; j++) {
                         while(locations[i][j].getItems().size() < 2 ) {
@@ -67,22 +72,21 @@ public class Map {
                                 List<Item> newItems = locations[i][j].getItems();
                                 newItems.add(new Item(Litter.values()[randomIndex(Litter.values().length)]));
                                 locations[i][j].setItems(newItems);
+                                numLitter++;
                             }
                         }
                     }
                 }
             }
         }
-        return (numLitter >= 30);
+        return (numLitter >= MAX_LITTER);
     }
 
     private Weather randomWeather() {
         return Weather.values()[randomIndex(Weather.values().length)];
     }
 
-    private LocationType randomLocationType() {
-        return LocationType.values()[randomIndex(LocationType.values().length)];
-    }
+
 
     private Season randomSeason() {
         return Season.values()[randomIndex(Season.values().length)];
@@ -121,7 +125,4 @@ public class Map {
         return totalAnimals;
     }
 
-    public Simulation getSimulation() {
-        return simulation;
-    }
 }

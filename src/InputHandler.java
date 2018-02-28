@@ -31,7 +31,7 @@ public class InputHandler {
 
         } else if (input.toLowerCase().regionMatches(0, quit,0,4)
                 || input.toLowerCase().regionMatches(0, exit,0,4)) {
-            return(InputHandler.exitHandler(player));
+            return(InputHandler.exitHandler());
 
             //combat commands
         } else if (input.toLowerCase().regionMatches(0,duel,0,5)) {
@@ -125,8 +125,8 @@ public class InputHandler {
             return true;
     }
 
-    private static boolean exitHandler(Player player) {
-        player.getSimulation().setGameOn(false);
-        return !player.getSimulation().isGameOn();
+    private static boolean exitHandler() {
+        Simulation.setGameOn(false);
+        return Simulation.isGameOn();
     }
 }

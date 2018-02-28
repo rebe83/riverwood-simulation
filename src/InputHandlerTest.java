@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class InputHandlerTest {
 
     private Player player;
@@ -13,10 +12,9 @@ public class InputHandlerTest {
     @Before
     public void setUp() {
         sim = new Simulation();
-        map = new Map(sim);
+        map = new Map();
         player = new Player();
         player.setCurrentLocation(map.getLocations()[2][2]);
-
     }
 
     @Test
@@ -44,19 +42,17 @@ public class InputHandlerTest {
     public void takeHandlerTest() {
         String input = "take sytofoam";
         assertEquals(true, InputHandler.inputHandler(input, player));
-
     }
 
     @Test
     public void dropHandlerTest() {
         String input = "drop styrofoam";
         assertEquals(true, InputHandler.inputHandler(input, player));
-
     }
 
     @Test
     public void listHandlerTest() {
-
+        String input = "list";
+        assertEquals("", InputHandler.inputHandler(input,player));
     }
-
 }

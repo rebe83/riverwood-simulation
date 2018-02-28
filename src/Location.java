@@ -13,7 +13,9 @@ public class Location {
     private List<Item> items = new ArrayList<>();
     private List<Resource> resources;
 
-    public Location() {
+    public Location(Map map) {
+        this.map = map;
+        this.locationType = randomLocationType();
         this.directions = directionHandler();
         this.resources = resourceHandler();
     }
@@ -78,6 +80,10 @@ public class Location {
             return resources;
         }
         return null;
+    }
+
+    private LocationType randomLocationType() {
+        return LocationType.values()[map.randomIndex(LocationType.values().length)];
     }
 
     public List<Direction> getDirections() {

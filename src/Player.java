@@ -108,9 +108,6 @@ public class Player {
         this.inventory = inventory;
     }
 
-    public Simulation getSimulation() {
-        return getCurrentLocation().getMap().getSimulation();
-    }
 
     public Map getMap() {
         return getCurrentLocation().getMap();

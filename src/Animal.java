@@ -251,26 +251,26 @@ public class Animal {
 
     private boolean eat() {
         if (this.hunger >= 20) {
-            for (Resource b : resources) {
-                if (b.name().equals("GRASS")) {
+            for (Resource b : location.getResources()) {
+                if (b.name().equals("GRASS") && resources.contains(b)) {
                     this.hunger = this.hunger - 10;
                     this.thirst = this.thirst + 5;
                     this.stress = this.stress - 5;
                     return true;
 
-                } else if (b.name().equals("DEAD_ANIMAL"))   {
+                } else if (b.name().equals("DEAD_ANIMAL") && resources.contains(b))   {
                     this.hunger = this.hunger - 10;
                     this.thirst = this.thirst + 6;
                     this.stress = this.stress - 5;
                     return true;
 
-                } else if (b.name().equals("GARBAGE")) {
+                } else if (b.name().equals("GARBAGE") && resources.contains(b)) {
                     this.hunger = this.hunger - 10;
                     this.thirst = this.thirst + 6;
                     this.stress = this.stress - 3;
                     return true;
 
-                } else if (b.name().equals("TREE")) {
+                } else if (b.name().equals("TREE") && resources.contains(b)) {
                     this.hunger = this.hunger - 10;
                     this.thirst = this.thirst + 4;
                     this.stress = this.stress - 6;
