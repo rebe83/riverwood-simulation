@@ -11,10 +11,9 @@ public class InputHandlerTest {
 
     @Before
     public void setUp() {
-        fileLayout = Data.setFileLayout("MonsterSiebel.json");
-        if (fileLayout != null) {
-            player.currentRoom = fileLayout.rooms[0];
-        }
+        map = new Map();
+        player.setCurrentLocation(map.getLocations()[2][2]);
+
     }
 
     @Test
@@ -28,22 +27,26 @@ public class InputHandlerTest {
     public void possibleGoHandlerTest() {
         String input = "go east";
         assertEquals(true, InputHandler.inputHandler(input, player));
-        assertEquals("SiebelEntry", player.currentRoom.name);
+        assertEquals(2.3, player.getCurrentLocation().getCoordinate(), 0.0005);
     }
+
     @Test
     public void impossibleGoHandlerTest() {
         String input = "go west";
         assertEquals(false, InputHandler.inputHandler(input, player));
-        assertEquals("SiebelEntry", player.currentRoom.name);
+        assertEquals(2.2, player.getCurrentLocation().getCoordinate(), 0.0005);
     }
+
     @Test
     public void takeHandlerTest() {
+        String input = "take sytofoam";
+        assertEquals(true, InputHandler.inputHandler(input, player));
 
     }
 
     @Test
     public void dropHandlerTest() {
-        String input = "drop pocket lint";
+        String input = "drop styrofoam";
         assertEquals(true, InputHandler.inputHandler(input, player));
 
     }
@@ -57,3 +60,4 @@ public class InputHandlerTest {
     public void exitHandlerTest() {
 
     }
+}
