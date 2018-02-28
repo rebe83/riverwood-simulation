@@ -10,6 +10,7 @@ public class Location {
     private List<Direction> directions;
     private LocationType locationType;
     private List<Animal> animals = new ArrayList<>();
+    private int numAnimals;
     private List<Item> items = new ArrayList<>();
     private List<Resource> resources;
 
@@ -18,17 +19,24 @@ public class Location {
         this.locationType = randomLocationType();
         this.directions = directionHandler();
         this.resources = resourceHandler();
+        this.numAnimals = 0;
     }
 
     public boolean addAnimal(Animal animal) {
         this.animals.add(animal);
+        numAnimals++;
         return true;
     }
 
     private boolean removeAnimal(Animal animal) {
         this.animals.remove(animal);
-        this.resources.add(Resource.DEAD_ANIMAL);
-        return false;
+        if (animal.getHealth() <= 0) {
+            this.resources.add(Resource.DEAD_ANIMAL);
+            numAnimals--;
+        } else {
+            numAnimals--;
+        }
+        return true;
     }
 
     public Animal getAnimal(String animalName) {
@@ -118,10 +126,6 @@ public class Location {
         return map;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
     public int getCoordinate() {
         return coordinate;
     }
@@ -132,5 +136,13 @@ public class Location {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+    public int getNumAnimals() {
+        return numAnimals;
+    }
+
+    public void setNumAnimals(int numAnimals) {
+        this.numAnimals = numAnimals;
     }
 }

@@ -41,7 +41,7 @@ public class Map {
             while (totalAnimals < 20) {
                 for (int i = 0; i < locations.length; i++) {
                     for (int j = 0; j < locations[i].length; j++) {
-                        while(locations[i][j].getAnimals().size() < 5 ) {
+                        while(locations[i][j].getNumAnimals() < 5 ) {
                             for (int k = 0; k < this.randomIndex(5); k++) {
                                 Animal newAnimal = new Animal(locations[i][j]);
 
@@ -85,8 +85,6 @@ public class Map {
     private Weather randomWeather() {
         return Weather.values()[randomIndex(Weather.values().length)];
     }
-
-
 
     private Season randomSeason() {
         return Season.values()[randomIndex(Season.values().length)];

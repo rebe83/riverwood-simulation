@@ -30,6 +30,7 @@ public class Animal {
      */
     Animal(Location location) {
         this.map = location.getMap();
+        this.location = location;
         breedManager();
         this.female = (map.randomIndex(2) % 2 == 0);
         this.stress = 0;
@@ -53,6 +54,7 @@ public class Animal {
      */
     private Animal(AnimalBreed breed, Location location) {
         this.map = location.getMap();
+        this.location = location;
         this.breed = breed;
         breedManager();
         this.female = (map.randomIndex(2) % 2 == 0);
@@ -337,46 +339,24 @@ public class Animal {
         return false;
     }
 
-
-
     public AnimalBreed getBreed() {
         return breed;
-    }
-
-    public void setBreed(AnimalBreed breed) {
-        this.breed = breed;
     }
 
     public List<AnimalBreed> getPrey() {
         return prey;
     }
 
-    public void setPrey(List<AnimalBreed> prey) {
-        this.prey = prey;
-    }
-
     public List<Food> getFood() {
         return food;
-    }
-
-    public void setFood(List<Food> food) {
-        this.food = food;
     }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Location getPreviousLocation() {
         return previousLocation;
-    }
-
-    public void setPreviousLocation(Location previousLocation) {
-        this.previousLocation = previousLocation;
     }
 
     public int getHealth() {
@@ -391,80 +371,40 @@ public class Animal {
         return attack;
     }
 
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
     public int getDefense() {
         return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
     }
 
     public int getStress() {
         return stress;
     }
 
-    public void setStress(int stress) {
-        this.stress = stress;
-    }
-
     public int getHunger() {
         return hunger;
-    }
-
-    public void setHunger(int hunger) {
-        this.hunger = hunger;
     }
 
     public int getThirst() {
         return thirst;
     }
 
-    public void setThirst(int thirst) {
-        this.thirst = thirst;
-    }
-
     public boolean isLiving() {
         return living;
-    }
-
-    public void setLiving(boolean living) {
-        this.living = living;
     }
 
     public boolean isHibernating() {
         return hibernating;
     }
 
-    public void setHibernating(boolean hibernating) {
-        this.hibernating = hibernating;
-    }
-
     public boolean isFemale() {
         return female;
-    }
-
-    public void setFemale(boolean female) {
-        this.female = female;
     }
 
     public boolean isPregnant() {
         return pregnant;
     }
 
-    public void setPregnant(boolean pregnant) {
-        this.pregnant = pregnant;
-    }
-
     public int getMonthsPregnant() {
         return monthsPregnant;
-    }
-
-    public void setMonthsPregnant(int monthsPregnant) {
-        this.monthsPregnant = monthsPregnant;
     }
 
     @Override
