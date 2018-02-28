@@ -5,21 +5,25 @@ public class Simulation {
     private static Map map;
     private static int timePassed;
     private static final Scanner scan = new Scanner(System.in);
+    private static boolean gameOn;
 
     Simulation() {
-        this.map = new Map();
-        this.player = new Player(map);
-        this.timePassed = 0;
+        map = new Map(this);
+        player = new Player();
+        timePassed = 0;
     }
 
     public static void main(String[] args) {
-        boolean gameOn = true;
-        player.setCurrentLocation(map.getLocations()[2][2]);
+        gameOn = true;
+        player.setCurrentLocation(map.getLocations()[0][0]);
 
         while(gameOn) {
-            
+
+            System.out.println(timePassed + " hours have passed since you began.");
+            System.out.println("You are standing by a " + player.getCurrentLocation().getLocationType().toString().toLowerCase());
+
             if (player.getCurrentLocation().getItems() != null) {
-                System.out.println("This room contains " + player.getCurrentLocation().getItems().toString());
+                System.out.println("There is/are a(n) " + player.getCurrentLocation().getItems().toString() + "laying around");
             } else {
                 System.out.println("This room is empty.");
             }
@@ -40,4 +44,15 @@ public class Simulation {
         }
     }
 
+    public boolean isGameOn() {
+        return gameOn;
+    }
+
+    public void setGameOn(boolean gameOn) {
+        Simulation.gameOn = gameOn;
+    }
+
+    public int getTimePassed() {
+        return timePassed;
+    }
 }
