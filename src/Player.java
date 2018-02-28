@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+
+import Data.ItemType;
 import Data.Litter;
 import Data.Food;
 
@@ -9,7 +11,6 @@ public class Player {
     private final int MIN_ATTACK = 5;
     private final int MIN_DEFENSE = 5;
 
-    private Map map;
     private int health;
     private int attack;
     private int defense;
@@ -17,8 +18,7 @@ public class Player {
     private Location currentLocation;
     private List<Item> inventory= new ArrayList<>();
     
-    Player(Map map) {
-        this.map = map;
+    Player() {
         this.health = MAX_HEALTH;
         this.attack = MIN_ATTACK;
         this.defense = MIN_DEFENSE;
@@ -41,7 +41,13 @@ public class Player {
         return (this.health < previousHealth);
     }
 
-    private boolean feed(Animal animal) {
+    private boolean feed(Animal animal, Item item) {
+        if (item.getType() == ItemType.FOOD);
+        for (Food a: animal.getFood()) {
+            if (item.getName().equals(a.name())) {
+                animal.eat(item);
+            }
+        }
         return false;
     }
 
@@ -49,17 +55,33 @@ public class Player {
      * the player picks up an item that is in the location.
      * @param item lowercase item
      */
-    private void pickUpItem(Item item) {
+    public boolean pickUpItem(Item item) {
         List<Item> roomItems = new ArrayList<>(currentLocation.getItems());
         for (Item a : roomItems) {
             if (a == item) {
                 roomItems.remove(item);
                 currentLocation.setItems(roomItems);
-                List<Item> newInventory = this.inventory;
-                newInventory.add(a);
-                setInventory(newInventory);
+                inventory.add(a);
+                return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * the player drops an item
+     * @param item proper cased item
+     */
+    public boolean dropItem(Item item) {
+        List<Item> roomItems = new ArrayList<>(currentLocation.getItems());
+        for (Item a : inventory) {
+            if (a.getName().toLowerCase().equalsIgnoreCase(item.getName())) {
+                roomItems.add(item);
+                inventory.remove(a);
+                return true;
+            }
+        }
+        return false;
     }
 
     public Location getCurrentLocation() {
@@ -74,24 +96,12 @@ public class Player {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public int getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
     public int getDefense() {
         return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
     }
 
     public List<Item> getInventory() {
@@ -100,5 +110,17 @@ public class Player {
 
     public void setInventory(List<Item> inventory) {
         this.inventory = inventory;
+    }
+
+    public Simulation getSimulation() {
+        return getCurrentLocation().getMap().getSimulation();
+    }
+
+    public Map getMap() {
+        return getCurrentLocation().getMap();
+    }
+
+    public int getCash() {
+        return cash;
     }
 }

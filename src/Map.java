@@ -4,6 +4,12 @@ import java.util.Random;
 import Data.*;
 
 public class Map {
+    /**
+     * the maximum amount of animals allowed on the map
+     */
+    private static final int MAX_ANIMALS = 50;
+
+    private Simulation simulation;
     private Location[][] locations;
     private Weather weather;
     private int months;
@@ -12,14 +18,14 @@ public class Map {
     private int totalAnimals;
     private int numLitter;
 
-    Map() {
+    Map(Simulation simulation) {
+        this.simulation = simulation;
         locations =  new Location[4][4];
         numBreeds = new int[AnimalBreed.values().length];
         numLitter = randomIndex(20) + 11;
         weather = randomWeather();
         season = randomSeason();
         months = 0;
-
     }
 
     private Weather randomWeather() {
@@ -65,5 +71,9 @@ public class Map {
 
     public int getTotalAnimals() {
         return totalAnimals;
+    }
+
+    public Simulation getSimulation() {
+        return simulation;
     }
 }
