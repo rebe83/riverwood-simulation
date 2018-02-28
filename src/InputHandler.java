@@ -1,8 +1,8 @@
-import java.util.Scanner;
+import Data.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class InputHandler {
-
-    private static Scanner SCAN = new Scanner(System.in);
 
     public static boolean inputHandler(String input, Player player) {
         String go = "go ";
@@ -11,8 +11,10 @@ public class InputHandler {
         String list = "list";
         String quit = "quit";
         String exit = "exit";
-        String duel = "duel ";
+        String duel = "attack ";
         String playerInfo = "playerinfo";
+        String coordinates = "coordinates";
+        String commands = "commands";
 
 
         if (input.toLowerCase().regionMatches(0, go,0 , 3)) {
@@ -29,12 +31,12 @@ public class InputHandler {
 
         } else if (input.toLowerCase().regionMatches(0, quit,0,4)
                 || input.toLowerCase().regionMatches(0, exit,0,4)) {
-            return(InputHandler.exitHandler());
+            return(InputHandler.exitHandler(player));
 
-            //add in combat commands here
+            //combat commands
         } else if (input.toLowerCase().regionMatches(0,duel,0,5)) {
-            if (MonsterAdventure.layout.getMonster(input.toLowerCase().substring(5)) != null
-                    && player.currentRoom.monstersToString().contains(input.toLowerCase().substring(5))) {
+            if (player.getCurrentLocation().getAnimal(input.toLowerCase().substring(5)) != null
+                    && player.getCurrentLocation().getAnimals().toString().contains(input.toLowerCase().substring(5))) {
                 Battler battle = new Battler(player, input.toLowerCase().substring(5));
                 return battle.battle();
             } else {
@@ -53,50 +55,78 @@ public class InputHandler {
     }
 
     private static boolean goHandler(String substring, Player player) {
-        if(player.currentRoom.getDirRoom(substring.toLowerCase()) != null) {
-            player.currentRoom = player.currentRoom.getDirRoom(substring.toLowerCase());
-            return true;
-        } else {
+        Location currentLocation = player.getCurrentLocation();
+        Map map = currentLocation.getMap();
+        List<Direction> directions = new ArrayList<>(currentLocation.getDirections());
+
+        if (directions.toString().toLowerCase().contains(substring.toLowerCase())) {
+            for (Direction a : directions) {
+                if (a.name().equalsIgnoreCase(substring)) {
+                    if (a.name().equalsIgnoreCase("east")) {
+                        player.setCurrentLocation(map.getLocations()
+                                [currentLocation.getCoordinate() / 10][currentLocation.getCoordinate() % 10 + 1]);
+                        return true;
+
+                    } else if (a.name().equalsIgnoreCase("west")) {
+                        player.setCurrentLocation(map.getLocations()
+                                [currentLocation.getCoordinate() / 10][currentLocation.getCoordinate() % 10 - 1]);
+                        return true;
+
+                    } else if (a.name().equalsIgnoreCase("north")) {
+                        player.setCurrentLocation(map.getLocations()
+                                [currentLocation.getCoordinate() / 10 - 1][currentLocation.getCoordinate() % 10]);
+                        return true;
+
+                    } else if (a.name().equalsIgnoreCase("south")) {
+                        player.setCurrentLocation(map.getLocations()
+                                [currentLocation.getCoordinate() / 10 + 1][currentLocation.getCoordinate() % 10]);
+                        return true;
+                    }
+
+                }
+            }
+        }
             System.out.println("I can't go " + substring);
             return false;
-        }
     }
+
     private static boolean takeHandler(String substring, Player player) {
-        if (Item.getItem(substring.toLowerCase(), player.currentRoom.items) != null) {
-            player.pickUpItem(Item.getItem(substring.toLowerCase(), player.currentRoom.items));
+        if (Item.getItem(substring.toLowerCase(), player.getCurrentLocation().getItems()) != null) {
+            player.pickUpItem(Item.getItem(substring.toLowerCase(), player.getCurrentLocation().getItems()));
             return true;
         } else {
             System.out.println("I can't take " + substring.toLowerCase());
             return false;
         }
     }
+
     private static boolean dropHandler(String substring, Player player) {
-        if (Item.getItem(substring.toLowerCase(), player.inventory) != null) {
-            player.dropItem(Item.getItem(substring.toLowerCase(), player.inventory));
+        if (Item.getItem(substring.toLowerCase(), player.getInventory()) != null) {
+            player.dropItem(Item.getItem(substring.toLowerCase(), player.getInventory()));
             return true;
         } else {
             System.out.println("I don't have " + substring.toLowerCase());
             return false;
         }
     }
+
     private static boolean listHandler(Player player) {
         try {
-            System.out.println(Item.itemsToString(player.inventory));
+            System.out.println(player.getInventory().toString());
         } catch (Exception e) {
             return false;
         }
         return true;
     }
+
     private static boolean playerInfoHandler(Player player) {
-        try {
-            System.out.println("Level: " + player.level + "Attack: " + player.attack + "Health: " + player.health);
+            System.out.println("Attack: " + player.getAttack() + "Health: " + player.getHealth());
+            System.out.println(player.getInventory().toString());
             return true;
-        } catch (NullPointerException n) {
-            return false;
-        }
     }
-    private static boolean exitHandler() {
-        MonsterAdventure.gameOn = false;
-        return !MonsterAdventure.gameOn;
+
+    private static boolean exitHandler(Player player) {
+        player.getSimulation().setGameOn(false);
+        return !player.getSimulation().isGameOn();
     }
 }
