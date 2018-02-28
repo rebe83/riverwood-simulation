@@ -28,8 +28,13 @@ public class Location {
         return false;
     }
 
-    public boolean addResource(Resource resource) {
-        return false;
+    public Animal getAnimal(String animalName) {
+        for (Animal a : this.animals) {
+            if (a.getBreed().name().equalsIgnoreCase(animalName)) {
+                return a;
+            }
+        }
+        return null;
     }
 
     private List<Direction> directionHandler() {
