@@ -86,7 +86,47 @@ public class Animal {
         return (health < previousHealth);
     }
 
+    public boolean eat(Item food) {
+        if (this.stress < 10 || this.hunger <= 0) {
+            this.hunger = this.hunger - food.getFilling();
+            this.thirst = this.thirst + food.getThirst();
+            this.stress = this.stress - food.getHappinessBoost();
+            food.setUses(food.getUses() - 1);
+            return true;
+        } else  {
+            return false;
+        }
+    }
+
     private boolean eat() {
+        if (this.hunger >= 20) {
+            for (Food b : food) {
+                if (b.name().equals("GRASS")) {
+                    this.hunger = this.hunger - 10;
+                    this.thirst = this.thirst + 5;
+                    this.stress = this.stress - 5;
+                    return true;
+
+                } else if (b.name().equals("DEAD_ANIMAL"))   {
+                    this.hunger = this.hunger - 10;
+                    this.thirst = this.thirst + 6;
+                    this.stress = this.stress - 5;
+                    return true;
+
+                } else if (b.name().equals("GARBAGE")) {
+                    this.hunger = this.hunger - 10;
+                    this.thirst = this.thirst + 6;
+                    this.stress = this.stress - 3;
+                    return true;
+
+                } else if (b.name().equals("TREE")) {
+                    this.hunger = this.hunger - 10;
+                    this.thirst = this.thirst + 4;
+                    this.stress = this.stress - 6;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
