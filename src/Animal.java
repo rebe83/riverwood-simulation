@@ -310,7 +310,7 @@ public class Animal {
                     if(animal1.female) {
                         if (animal1.stress <= 10
                                 && animal1.map.getNumBreeds()[animal1.breed.ordinal()] < 10
-                                && animal1.map.getTotalAnimals() < 50) {
+                                && animal1.map.getTotalAnimals() < map.getMaxAnimals()) {
                             animal1.pregnant = true;
                             return true;
                         }

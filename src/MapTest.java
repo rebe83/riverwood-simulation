@@ -4,13 +4,26 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MapTest {
-    private static Simulation simulation;
     private static Map map;
 
     @Before
     public void setup() {
-        simulation = new Simulation();
         map = new Map();
+    }
+
+    @Test
+    public void locationsTest() {
+        Location[][] mapLocations = map.getLocations();
+        for (int i = 0; i < mapLocations.length; i++) {
+            for (int j = 0; j < mapLocations[i].length; j++) {
+                assertFalse(mapLocations[i][j] == null);
+            }
+        }
+    }
+
+    @Test
+    public void totalAnimalsTest() {
+        assertTrue(map.getTotalAnimals() >= 20);
     }
 
     @Test
@@ -48,21 +61,5 @@ public class MapTest {
     public void getSeason() {
         assertNotNull(map.getSeason());
         System.out.println(map.getSeason());
-    }
-
-    @Test
-    public void getNumBreeds() {
-    }
-
-    @Test
-    public void getNumLitter() {
-    }
-
-    @Test
-    public void getTotalAnimals() {
-    }
-
-    @Test
-    public void getSimulation() {
     }
 }

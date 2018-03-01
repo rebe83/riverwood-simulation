@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import Data.*;
 
+/**
+ * The Map class creates a square grid of locations, populates it with animals and litter,
+ * and holds on to weather and season information,
+ * as well as how many in-game months have passed since the map was generated.
+ */
 public class Map {
     /**
      * the maximum amount of animals allowed on the map
@@ -36,6 +41,11 @@ public class Map {
         litterMaker();
     }
 
+    /**
+     * Uses the randomIndex method to randomly create animals to populate each location, up to 5/ location,
+     * during map creation
+     * @return if the creation worked up to specifications.
+     */
     private boolean animalMaker() {
         if (this.locations != null) {
             while (totalAnimals < 20) {
@@ -62,6 +72,11 @@ public class Map {
         return (totalAnimals >= 20);
     }
 
+    /**
+     * Uses the randomIndex method to randomly create litter to populate each location, up to 2 / location,
+     * during map creation.
+     * @return if the creation worked up to specifications.
+     */
     private boolean litterMaker() {
         if (this.locations != null) {
             while (numLitter < MAX_LITTER) {
@@ -82,6 +97,16 @@ public class Map {
         return (numLitter >= MAX_LITTER);
     }
 
+    /**
+     * chooses a random index of an array based on its length (or a random number within a value)
+     * @param arrayLength the length of the array
+     * @return the chosen index / randomized number.
+     */
+    public int randomIndex(int arrayLength) {
+        Random random = new Random();
+        return random.nextInt(arrayLength - 1);
+    }
+
     private Weather randomWeather() {
         return Weather.values()[randomIndex(Weather.values().length)];
     }
@@ -90,9 +115,8 @@ public class Map {
         return Season.values()[randomIndex(Season.values().length)];
     }
 
-    public int randomIndex(int arrayLength) {
-        Random random = new Random();
-        return random.nextInt(arrayLength - 1);
+    public int getMaxAnimals() {
+        return MAX_ANIMALS;
     }
 
     public Location[][] getLocations() {

@@ -1,3 +1,6 @@
+
+import Data.Litter;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,52 +10,55 @@ public class InputHandlerTest {
 
     private Player player;
     private Map map;
-    private Simulation sim;
 
     @Before
     public void setUp() {
-        sim = new Simulation();
         map = new Map();
         player = new Player();
-        player.setCurrentLocation(map.getLocations()[2][2]);
+        player.setCurrentLocation(map.getLocations()[2][0]);
     }
 
     @Test
     public void nullPlayerInputTest() {
         player = null;
         String input = "go west";
-        InputHandler.inputHandler(input, player);
+        Assert.assertFalse(InputHandler.inputHandler(input, player));
     }
 
     @Test
-    public void possibleGoHandlerTest() {
+    public void possibleEastGoHandlerTest() {
         String input = "go east";
-        assertEquals(true, InputHandler.inputHandler(input, player));
-        assertEquals(2.3, player.getCurrentLocation().getCoordinate(), 0.0005);
+        Assert.assertEquals(true, InputHandler.inputHandler(input, player));
+        Assert.assertEquals(21, player.getCurrentLocation().getCoordinate(), 0.0005);
     }
 
     @Test
-    public void impossibleGoHandlerTest() {
+    public void impossibleWestGoHandlerTest() {
         String input = "go west";
-        assertEquals(false, InputHandler.inputHandler(input, player));
-        assertEquals(2.2, player.getCurrentLocation().getCoordinate(), 0.0005);
+        Assert.assertEquals(false, InputHandler.inputHandler(input, player));
+        Assert.assertEquals(20, player.getCurrentLocation().getCoordinate(), 0.0005);
     }
 
     @Test
     public void takeHandlerTest() {
-        String input = "take sytofoam";
-        assertEquals(true, InputHandler.inputHandler(input, player));
+        String input = "take styrofoam";
+        InputHandler.inputHandler(input, player);
+        Assert.assertTrue(player.getInventory().get(0).getName().equals(Litter.STYROFOAM.name()));
     }
 
+    //index out of bounds error ??
     @Test
     public void dropHandlerTest() {
+        InputHandler.inputHandler("take styrofoam", player);
+        System.out.println(player.getInventory().get(0).getName());
         String input = "drop styrofoam";
-        assertEquals(true, InputHandler.inputHandler(input, player));
+        InputHandler.inputHandler(input, player);
+        Assert.assertTrue(player.getInventory().size() == 0);
     }
 
     @Test
     public void listHandlerTest() {
         String input = "list";
-        assertEquals("", InputHandler.inputHandler(input,player));
+        Assert.assertEquals(true, InputHandler.inputHandler(input,player));
     }
 }

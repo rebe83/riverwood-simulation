@@ -16,6 +16,10 @@ public class InputHandler {
         String coordinates = "coordinates";
         String commands = "commands";
 
+        if (player == null) {
+            return false;
+        }
+
 
         if (input.toLowerCase().regionMatches(0, go,0 , 3)) {
             return(InputHandler.goHandler(input.substring(3), player));

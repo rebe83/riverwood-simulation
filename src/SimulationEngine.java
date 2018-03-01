@@ -1,6 +1,6 @@
 public class SimulationEngine {
 
-    public boolean update(int timePassed) {
+    public static boolean update(int timePassed, Map map) {
         return false;
     }
 }

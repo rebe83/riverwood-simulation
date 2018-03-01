@@ -8,7 +8,7 @@ public class Battler {
     private Location room;
     private boolean battling;
 
-    protected Battler(Player player, String animalName) {
+    public Battler(Player player, String animalName) {
         this.player = player;
         this.animal = room.getAnimal(animalName);
         this.room = player.getCurrentLocation();
@@ -34,7 +34,7 @@ public class Battler {
                 }
                 animal.setHealth(animal.getHealth() - damage);
                 if (animal.getHealth() < 0) {
-                    System.out.println("Congratulations! You have slain the monster.");
+                    System.out.println("You have slain the " + animal.getBreed().name() + ".");
 
                 }
             }
