@@ -47,7 +47,7 @@ public class Location {
         }
         return null;
     }
-
+    //buggy
     private List<Direction> directionHandler() {
         List<Direction> directions = new ArrayList<>(Arrays.asList(Direction.values()));
         if(this.coordinate % 10 == 0) {
